@@ -1,0 +1,18 @@
+#!/bin/sh
+set -xe
+USER="tester"
+GERRIT="http://gerrit-httpd"
+CURL="curl -v -b cookies.txt"
+
+put(){
+    $CURL -X PUT -H "Content-Type: application/json;charset=utf-8" "$@"
+}
+
+export HOME=/home/$USER
+cd $HOME
+
+# this will create the account if it doesn't exist yet, and provide a cookie
+# which may be reused for REST auth.
+curl -v -c cookies.txt -u $USER: $GERRIT/login/
+
+put -d '{"name":"test user"}' $GERRIT/a/accounts/self/name

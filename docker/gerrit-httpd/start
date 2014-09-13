@@ -1,0 +1,4 @@
+#!/bin/sh
+set -xe
+env
+exec httpd -DNO_DETACH

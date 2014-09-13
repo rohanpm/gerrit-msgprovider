@@ -1,0 +1,6 @@
+#!/bin/sh
+set -xe
+GERRIT="java -jar /var/lib/gerrit/bin/gerrit.war"
+cd /var/lib/gerrit
+$GERRIT reindex
+exec $GERRIT daemon

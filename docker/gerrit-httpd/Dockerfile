@@ -1,5 +1,7 @@
-FROM rohanpm/gerrit:latest
+FROM rohanpm/centos:latest
 MAINTAINER rohan@mcgovern.id.au
-RUN yum -y install httpd git && yum clean all
-RUN git config --file /var/lib/gerrit/etc/gerrit.config auth.type HTTP
-RUN git config --file /var/lib/gerrit/etc/gerrit.config --unset auth.httpHeader
+RUN yum -y install httpd && yum clean all
+COPY gerrit-proxy.conf /etc/httpd/conf.d/gerrit-proxy.conf
+COPY start /start
+EXPOSE 80
+CMD ["/start"]
