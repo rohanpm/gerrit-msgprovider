@@ -11,6 +11,7 @@ USER gerrit
 RUN java -jar /usr/local/libexec/gerrit.war init --batch -d /var/lib/gerrit
 
 RUN git config --file /var/lib/gerrit/etc/gerrit.config auth.type HTTP
+RUN git config --file /var/lib/gerrit/etc/gerrit.config auth.gitBasicAuth true
 RUN git config --file /var/lib/gerrit/etc/gerrit.config gerrit.canonicalWebUrl http://gerrit:8080/
 
 COPY start /start
