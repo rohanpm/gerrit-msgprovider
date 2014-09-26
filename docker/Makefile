@@ -77,13 +77,20 @@ endef
 
 $(foreach img,$(IMAGES),$(eval $(call BUILD_template,$(img))))
 
-############ PUSH/CLEAN TARGETS ###############################################
+############ PUSH/PULL/CLEAN TARGETS ##########################################
 
 .PHONY: push
 push: $(foreach dir,$(IMAGES),$(dir)-push)
 
 %-push: $*/.built
 	docker push "$(IMGPREFIX)$*"
+
+.PHONY: pull
+pull: $(foreach dir,$(IMAGES),$(dir)-pull)
+
+%-pull:
+	docker pull "$(IMGPREFIX)$*"
+	$(call docker-get-image-id-from-tag,$*) > $*/.built
 
 .PHONY: clean
 clean: $(foreach dir,$(IMAGES),$(dir)-clean)
